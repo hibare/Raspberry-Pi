@@ -1,0 +1,33 @@
+---
+- name: Start Pyload in docker
+  hosts: all
+  vars:
+    docker_path: ~/docker
+    app_name: pyload
+  tasks:
+    - name: Create docker directory
+      file:
+        path: "{{ docker_path }}"
+        state: directory
+        mode: 0755
+      become: false
+      
+    - name: Create {{ app_name }} folder on Pi.
+      file:
+        path: "{{ docker_path }}/{{ app_name }}"
+        state: directory
+        mode: 0755
+      become: false
+
+    - name: Copy {{ app_name }} docker-compose template to Pi.
+      template:
+        src: templates/{{ app_name }}-docker-compose.yml.j2
+        dest: "{{ docker_path }}/{{ app_name }}/docker-compose.yml"
+        mode: 0640
+      become: false
+
+    - name: Ensure {{ app_name }} is running.
+      community.docker.docker_compose:
+        project_src: "{{ docker_path }}/{{ app_name }}/"
+        build: false
+      become: false

@@ -1,9 +1,12 @@
+# {{ ansible_managed }}
 ---
-version: "2.1"
+version: "3"
+
 services:
   jellyfin:
     image: linuxserver/jellyfin
     container_name: jellyfin
+    hostname: jellyfin
     environment:
       - PUID=1000
       - PGID=1000
@@ -11,10 +14,10 @@ services:
       - UMASK_SET=022 #optional
     volumes:
       - ./data/library:/config
-      - /home/pi/media/tv_shows:/data/tvshows
-      - /home/pi/media/movies:/data/movies
-      - /home/pi/media/online_radio:/data/online_radio
-      - /home/pi/media/music:/data/music
+      - /home/pi/media:/data/tvshows
+      - /home/pi/media:/data/movies
+      - /home/pi/media:/data/online_radio
+      - /home/pi/media:/data/music
       - ./data/lib:/opt/vc/lib #optional
     ports:
       - 8096:8096
@@ -27,3 +30,4 @@ services:
       #- /dev/video11:/dev/video11 #optional
       #- /dev/video12:/dev/video12 #optional
     restart: unless-stopped
+

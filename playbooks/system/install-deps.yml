@@ -1,0 +1,12 @@
+---
+- name: Install deps
+  hosts: all
+  tasks:
+    - name: Ping test
+      ping:
+
+    - name: Install dependancies from apt
+      become: yes
+      apt: 
+        name: ['apt-transport-https', 'curl', 'git']
+        state: latest

@@ -1,17 +1,20 @@
+# {{ ansible_managed }}
 ---
-version: "2.1"
+version: "3"
+
 services:
   pyload:
     image: linuxserver/pyload
     container_name: pyload
+    hostname: pyload
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Kolkata
-      - PASSWORD=pyload
+      - PASSWORD=password
     volumes:
       - ./data/pyload/config:/config
-      - ./data/downloads:/downloads
+      - /home/pi/media:/downloads
     ports:
       - 8000:8000
       - 7227:7227 #optional
